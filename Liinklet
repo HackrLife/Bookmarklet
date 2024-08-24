@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Themed Bookmarking App - Dark Mode</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        #bookmarkForm {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            margin: 0 5px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            border: 1px solid #444;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #bookmarkContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .column {
+            flex: 1;
+            min-width: 200px;
+            margin: 0 10px;
+        }
+        .column h2 {
+            color: #4CAF50;
+        }
+        .card {
+            background-color: #2a2a2a;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+        .card a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .card a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 1200px) {
+            .column {
+                flex-basis: calc(33.333% - 20px);
+            }
+        }
+        @media (max-width: 900px) {
+            .column {
+                flex-basis: calc(50% - 20px);
+            }
+        }
+        @media (max-width: 600px) {
+            .column {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Themed Bookmarking App</h1>
+    <form id="bookmarkForm">
+        <input type="text" id="titleInput" placeholder="Title" required>
+        <input type="url" id="urlInput" placeholder="URL" required>
+        <select id="themeSelect">
+            <option value="Work">Work</option>
+            <option value="Personal">Personal</option>
+            <option value="Education">Education</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Other">Other</option>
+        </select>
+        <button type="submit">Add Bookmark</button>
+    </form>
+    <div id="bookmarkContainer">
+        <div class="column" id="workColumn"><h2>Work</h2></div>
+        <div class="column" id="personalColumn"><h2>Personal</h2></div>
+        <div class="column" id="educationColumn"><h2>Education</h2></div>
+        <div class="column" id="entertainmentColumn"><h2>Entertainment</h2></div>
+        <div class="column" id="otherColumn"><h2>Other</h2></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('bookmarkForm');
+        const titleInput = document.getElementById('titleInput');
+        const urlInput = document.getElementById('urlInput');
+        const themeSelect = document.getElementById('themeSelect');
+        const bookmarkContainer = document.getElementById('bookmarkContainer');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            addBookmark(titleInput.value, urlInput.value, themeSelect.value);
+            form.reset();
+        });
+
+        function addBookmark(title, url, theme) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <h3>${title}</h3>
+                <a href="${url}" target="_blank">${url}</a>
+            `;
+
+            const column = document.getElementById(`${theme.toLowerCase()}Column`);
+            column.appendChild(card);
+        }
+
+        // Sample bookmarks
+        addBookmark('Google', 'https://www.google.com', 'Work');
+        addBookmark('Facebook', 'https://www.facebook.com', 'Personal');
+        addBookmark('Coursera', 'https://www.coursera.org', 'Education');
+        addBookmark('Netflix', 'https://www.netflix.com', 'Entertainment');
+        addBookmark('Weather', 'https://www.weather.com', 'Other');
+    </script>
+</body>
+</html>
